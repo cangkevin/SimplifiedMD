@@ -35,20 +35,20 @@ class WebMDSpider(scrapy.Spider):
 			tmp = bleach.clean(tmp, tags=[], strip=True)
 			txt_str += ' ' + tmp
 			
-			if len(txt_str) > 0:
-				yield {
-					'title': response.css('title::text').extract_first(),
-					'text': ' '.join(txt_str.strip().split()),
-                }
+		if len(txt_str) > 0:
+			yield {
+				'title': response.css('title::text').extract_first(),
+				'text': ' '.join(txt_str.strip().split()),
+			}
 			
-			else:
-				hub_links = []
-				for link in response.xpath('//*[(@id = "ContentPane32")]//li//a').css('a::attr(href)').extract():
-					hub_links.append(link)
+		else:
+			hub_links = []
+			for link in response.xpath('//*[(@id = "ContentPane32")]//li//a').css('a::attr(href)').extract():
+				hub_links.append(link)
 				
-				hub_links.append(response.xpath('//*[(@id = "ContentPane35")]//*[contains(concat( " ", @class, " " ), concat( " ", "button", " " ))]').css('a::attr(href)').extract_first())
-				for l in hub_links:
-					yield Request(response.urljoin(l), callback = self.parse_hub)
+			hub_links.append(response.xpath('//*[(@id = "ContentPane35")]//*[contains(concat( " ", @class, " " ), concat( " ", "button", " " ))]').css('a::attr(href)').extract_first())
+			for l in hub_links:
+				yield Request(response.urljoin(l), callback = self.parse_hub)
 					
 	# parse a hub link
 	def parse_hub(self, response):
@@ -61,11 +61,11 @@ class WebMDSpider(scrapy.Spider):
 					tmp = bleach.clean(tmp, tags=[], strip=True)
 					txt_str += ' ' + tmp
 					
-					if len(txt_str) > 0:
-						yield {
-							'title': response.css('title::text').extract_first(),
-							'text': ' '.join(txt_str.strip().split()),
-						}
+				if len(txt_str) > 0:
+					yield {
+						'title': response.css('title::text').extract_first(),
+						'text': ' '.join(txt_str.strip().split()),
+					}
 		
 		else:
 			txt_str = ''
@@ -74,8 +74,8 @@ class WebMDSpider(scrapy.Spider):
 				tmp = bleach.clean(tmp, tags=[], strip=True)
 				txt_str += ' ' + tmp
 				
-				if len(txt_str) > 0:
-					yield {
-						'title': response.css('title::text').extract_first(),
-						'text': ' '.join(txt_str.strip().split()),
-					}
+			if len(txt_str) > 0:
+				yield {
+					'title': response.css('title::text').extract_first(),
+					'text': ' '.join(txt_str.strip().split()),
+				}
