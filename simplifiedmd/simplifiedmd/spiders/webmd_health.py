@@ -29,15 +29,53 @@ class WebMDSpider(scrapy.Spider):
 	
 	# parse a topice page
 	def parse_page(self, response):
-            txt_str = ''
-            for page in response.css('div.article-page'):
-                for paragraph in page.css('p').extract():
-                    tmp = paragraph.strip()
-                    tmp = bleach.clean(tmp, tags=[], strip=True)
-                    txt_str += ' ' + tmp
-
-            if len(txt_str) > 0:
-                yield {
-                    'title': response.css('title::text').extract_first(),
-                    'text': ' '.join(txt_str.strip().split()),
+		txt_str = ''
+		for page in response.css('div.article-page').extract():
+			tmp = page.strip()
+			tmp = bleach.clean(tmp, tags=[], strip=True)
+			txt_str += ' ' + tmp
+			
+			if len(txt_str) > 0:
+				yield {
+					'title': response.css('title::text').extract_first(),
+					'text': ' '.join(txt_str.strip().split()),
                 }
+			
+			else:
+				hub_links = []
+				for link in response.xpath('//*[(@id = "ContentPane32")]//li//a').css('a::attr(href)').extract():
+					hub_links.append(link)
+				
+				hub_links.append(response.xpath('//*[(@id = "ContentPane35")]//*[contains(concat( " ", @class, " " ), concat( " ", "button", " " ))]').css('a::attr(href)').extract_first())
+				for l in hub_links:
+					yield Request(response.urljoin(l), callback = self.parse_hub)
+					
+	# parse a hub link
+	def parse_hub(self, response):
+		links = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "link-title", " " ))]').css('a::attr(href)').extract()
+		if len(links) > 0:
+			for l in links:
+				txt_str = ''
+				for page in response.css('div.article-page').extract():
+					tmp = page.strip()
+					tmp = bleach.clean(tmp, tags=[], strip=True)
+					txt_str += ' ' + tmp
+					
+					if len(txt_str) > 0:
+						yield {
+							'title': response.css('title::text').extract_first(),
+							'text': ' '.join(txt_str.strip().split()),
+						}
+		
+		else:
+			txt_str = ''
+			for page in response.css('div.article-page').extract():
+				tmp = page.strip()
+				tmp = bleach.clean(tmp, tags=[], strip=True)
+				txt_str += ' ' + tmp
+				
+				if len(txt_str) > 0:
+					yield {
+						'title': response.css('title::text').extract_first(),
+						'text': ' '.join(txt_str.strip().split()),
+					}
