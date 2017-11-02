@@ -34,7 +34,9 @@ class WebMDSpider(scrapy.Spider):
                 for paragraph in page.css('p').extract():
                     tmp = paragraph.strip()
                     tmp = bleach.clean(tmp, tags=[], strip=True)
-                    txt_str += ' ' + tmp
+                    tmp = ' '.join(tmp.strip().split())
+                    if not tmp.startswith(CONST.WEBMB_IMPORTANT_SECTION):
+                        txt_str += ' ' + tmp
 
             if len(txt_str) > 0:
                 yield {
