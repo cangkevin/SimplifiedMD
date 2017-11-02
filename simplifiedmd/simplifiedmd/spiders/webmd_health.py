@@ -3,6 +3,7 @@ from scrapy import Request
 from bs4 import BeautifulSoup
 import bleach
 import webmd_health_const as CONST
+import unidecode as UNI
 
 class WebMDSpider(scrapy.Spider):
 	name = 'webmd_health'
@@ -31,7 +32,7 @@ class WebMDSpider(scrapy.Spider):
 	def parse_page(self, response):
 		txt_str = ''
 		for page in response.css('div.article-page').extract():
-			tmp = page.strip()
+			tmp = UNI.unidecode(page.strip())
 			tmp = bleach.clean(tmp, tags=[], strip=True)
 			txt_str += ' ' + tmp
 			
@@ -57,7 +58,7 @@ class WebMDSpider(scrapy.Spider):
 			for l in links:
 				txt_str = ''
 				for page in response.css('div.article-page').extract():
-					tmp = page.strip()
+					tmp = UNI.unidecode(page.strip())
 					tmp = bleach.clean(tmp, tags=[], strip=True)
 					txt_str += ' ' + tmp
 					
@@ -70,7 +71,7 @@ class WebMDSpider(scrapy.Spider):
 		else:
 			txt_str = ''
 			for page in response.css('div.article-page').extract():
-				tmp = page.strip()
+				tmp = UNI.unidecode(page.strip())
 				tmp = bleach.clean(tmp, tags=[], strip=True)
 				txt_str += ' ' + tmp
 				
