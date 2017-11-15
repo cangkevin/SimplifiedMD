@@ -4,6 +4,7 @@ import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize, PunktSentenceTokenizer
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
+from sklearn.neural_network import BernoulliRBM
 
 import numpy as np
 import json
@@ -15,12 +16,12 @@ example_text = "Alkaptonuria is a rare genetic metabolic disorder characterized 
 stemmer = PorterStemmer()
 stop_words = set(stopwords.words('english'))
 
+sentences = sent_tokenize(example_text)
 normalized_words_pos = {}
 norm_word_freq = {}
 transformed_text = []
 
-# split sentences
-for sent in sent_tokenize(example_text):
+for sent in sentences:
     # split words of sentencea
 	sent_words = word_tokenize(sent)
 	transformed_sent = []
@@ -71,4 +72,39 @@ for i in range(len(transformed_text)):
                         tfisf_computations[transformed_text[i]], 
                         compute_centroid_sim(transformed_text[i], tfisf_scores[0][0])]
 
-print sent_feat_mat
+# train a Restricted Boltzman Machine based on the sentence-feature matrix
+model = BernoulliRBM(n_components=8, batch_size=4, n_iter=5)
+model.fit(sent_feat_mat)
+
+# enhance the original scores of the original sentence-feature matrix
+sent_scores = []
+for i in range(len(sentences)):
+    sent_scores.append(
+                (i, np.sum(np.dot(sent_feat_mat[i], model.components_) 
+                    + model.intercept_visible_))
+                )
+                
+sent_scores.sort(key = lambda tup : tup[1], reverse=True)
+
+# extract sentence with the top score
+top_sent = sentences[sent_scores[0][0]]
+del sent_scores[0]
+
+# parameter for number of sentences in summary
+k = 3
+
+# generate summary
+summary = [top_sent]
+for i in range(k):
+    top_half_scores = sent_scores[:int(len(sent_scores)/2)]
+    highest_jaccard = -1
+    next_sent = None
+    for score in top_half_scores:
+        jaccard_score = compute_jaccard(top_sent, sentences[score[0]])
+        if jaccard_score > highest_jaccard:
+            highest_jaccard = jaccard_score
+            next_sent = score
+    summary.append(sentences[next_sent[0]])
+    del sent_scores[next_sent[0]]
+    
+print " ".join(summary).strip()

@@ -1,6 +1,10 @@
 from __future__ import division
 import math
+import nltk
 from math import cos
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+from sklearn.metrics import jaccard_similarity_score
 
 """
     Helper Functions for computing features
@@ -97,18 +101,30 @@ def compute_centroid_sim(sent, centroid):
         for key, value in centroid_freq.iteritems():
             if key in sent_freq:
                 numerator += value * sent_freq[key]
+
+    if numerator == 0:
+        return 0
                 
-	sqrt_centroid = 0
-	for key, value in centroid_freq.iteritems():
+    sqrt_centroid = 0
+    for key, value in centroid_freq.iteritems():
 		sqrt_centroid += value ** 2
-	sqrt_centroid = math.sqrt(sqrt_centroid)
+    sqrt_centroid = math.sqrt(sqrt_centroid)
 	
-	sqrt_sent = 0
-	for key, value in sent_freq.iteritems():
+    sqrt_sent = 0
+    for key, value in sent_freq.iteritems():
 		sqrt_sent += value ** 2
-	sqrt_sent = math.sqrt(sqrt_sent)
+    sqrt_sent = math.sqrt(sqrt_sent)
 	
-	if sqrt_centroid == 0 or sqrt_sent == 0:
+    if sqrt_centroid == 0 or sqrt_sent == 0:
 		return 0
-	else:
-		return (numerator)/(sqrt_centroid * sqrt_sent)
+    else:
+        return numerator/(sqrt_centroid * sqrt_sent)
+        
+def compute_jaccard(a, b):
+    stemmer = PorterStemmer()
+    
+    a_words = set([stemmer.stem(word) for word in word_tokenize(a)])
+    b_words = set([stemmer.stem(word) for word in word_tokenize(b)])
+    
+    return len(a_words & b_words) / len(a_words | b_words)
+
