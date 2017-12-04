@@ -15,21 +15,30 @@ function updateResultsWithError() {
 
 $(document).ready(function() {
     var csrftoken = Cookies.get('csrftoken');
+    
+    $("#slider").slider();
+    $("#slider").on("slide", function(slideEvt) {
+	    $("#sliderVal").text(slideEvt.value);
+    });
+
+    
     var btn = $('#simplify-btn');
     btn.click(function() {
-    
         var text = $('#text-area').val()
+        var len = $('#slider').val()
+        
         if (text.length != 0) {
             $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: 'ajax/simplify/',
                 beforeSend: function(xhr, settings) {
                     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken);
                     }
                 },
                 data: {
-                    'text': text
+                    'text': text,
+                    'length': len,
                 },
                 dataType: 'json',
                 error: function() {

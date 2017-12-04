@@ -3917,3 +3917,8 @@
 			}
 
 		}
+		
+/* Slider */
+    #len-slider .slider-selection{
+        background: #9A9A9A;
+    }
