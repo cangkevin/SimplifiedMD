@@ -16,7 +16,13 @@ function updateResultsWithError() {
 $(document).ready(function() {
     var csrftoken = Cookies.get('csrftoken');
     
-    $("#slider").slider();
+    $("#slider").slider({
+        min: 20,
+        max: 80,
+        step: 10,
+        value: 50
+    });
+    
     $("#slider").on("slide", function(slideEvt) {
 	    $("#sliderVal").text(slideEvt.value);
     });
