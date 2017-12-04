@@ -29,11 +29,13 @@ def compute_term_freq(sent):
     Functions to compute features
 """
 def theme_count(sent, theme_words):
+    if len(sent) == 0:
+        return 0
     count = 0
     for word in sent.split():
         if word in theme_words:
             count += 1
-    return count/len(sent)
+    return float(count)/len(sent)
 
 def sent_pos(pos, text_len):
     if pos == 0 or pos == text_len-1:
@@ -67,11 +69,13 @@ def count_proper(sent, pos_tags):
     return count
 
 def count_numerals(sent):
-	count = 0
-	for word in sent.split():
-		if is_number(word):
-			count += 1
-	return count/len(sent)
+    if len(sent) == 0:
+        return 0
+    count = 0
+    for word in sent.split():
+        if is_number(word):
+            count += 1
+    return float(count)/len(sent.split())
 
 def compute_tfisf(sent, transformed_text):
     term_freq = compute_term_freq(sent)
