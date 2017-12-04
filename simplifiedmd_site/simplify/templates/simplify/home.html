@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SimplifiedMD: A Website for Simplifying Medical Information</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/main.css' %}" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Results</a></li>
+							<li><a href="#two">About Us</a></li>
+							<!--<li><a href="#three">Get in touch</a></li>-->
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>SimplifiedMD</h1>
+							<p>
+                                <label>Simplify any text!</label>
+                                <textarea id="text-area"
+                                          rows="5"
+                                          cols="80"
+                                          placeholder="Paste the text you would like to summarize here!"></textarea>
+                            </p>
+							<ul class="actions">
+								<li><a id="simplify-btn" href="#one" class="button scrolly">Simplify!</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style2 spotlights">
+						<section>
+							<div class="content">
+								<div class="inner">
+									<h2>Results</h2>
+									<p id="result-area">The results of the simplified medical information will be displayed here!</p>
+									<ul class="actions">
+										<li><a href="#" class="button">Simplify Again?</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+				<!-- Two -->
+					<section id="two" class="wrapper style3 fade-up">
+						<div class="inner">
+							<h2>About SimplifiedMD</h2>
+							<p>SimplifiedMD is a website useful for people that have a hard time understanding highly dense medical information! By inserting your desired text to simplify, our website is able to simplify your input text and output a simplified version of your medical text input. Simply copy any piece of text from a medical website such as WebMD, MedlinePlus, Mayo Clinic, and others, and just paste the piece of text into the text box on the main page and click on the "Simplify it!" button. A simplified version of text will then be output after the button has been pressed.</p>
+							<p>We believe that understanding medical information such as diseases and drugs is crucial for patients as they can have a sense of relief when it comes to minor diseases or a sense of awareness when it comes to complicated and high impact diseases/drugs. Therefore, having a good grasp of what is going on with your body is important and thus SimplifiedMD is perfect for novice users that would like to learn more about certain diseases and/or drugs! </p>
+						</div>
+					</section>
+				<!-- Three -->
+				<!--
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Inquiries/Further Assistance</h2>
+							<p>Please enter your name, e-mail, and any further questions you have in the following fields if you would like to hear back from  us. Comments and suggestions recommended! </p>
+							<div class="split style1">
+								<section>
+									<form method="post" action="#">
+										<div class="field half first">
+											<label for="name">Name</label>
+											<input type="text" name="name" id="name" />
+										</div>
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="text" name="email" id="email" />
+										</div>
+										<div class="field">
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="5"></textarea>
+										</div>
+										<ul class="actions">
+											<li><a href="" class="button submit">Send Message</a></li>
+										</ul>
+									</form>
+								</section>
+								<section>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<span>12345 Somewhere Road #654<br />
+											College Station, TX 77840<br />
+											USA</span>
+										</li>
+										<li>
+											<h3>Email</h3>
+											<a href="#">Inquiries@SimplifiedMD.net</a>
+										</li>
+										<li>
+											<h3>Phone</h3>
+											<span>713-420-2040</span>
+										</li>
+										<li>
+											<h3>Social</h3>
+											<ul class="icons">
+												<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+												<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
+												<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+					-->	
+			</div>
+
+
+		<!-- Scripts -->
+			<script src="{% static 'simplify/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/util.js' %}"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="{% static 'simplify/assets/js/main.js' %}"></script>
+            <script src="{% static 'simplify/assets/js/site.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/js.cookie.js' %}"></script>
+			
+	</body>
+</html>
