@@ -9,6 +9,8 @@ from sklearn.neural_network import BernoulliRBM
 import numpy as np
 import json
 import operator
+
+from operator import itemgetter
 from features import *
 
 def summarize(text):
@@ -73,7 +75,6 @@ def summarize(text):
 
     # train a Restricted Boltzman Machine based on the sentence-feature matrix
     model = BernoulliRBM(n_components=8, batch_size=4, n_iter=5)
-    print sent_feat_mat
     model.fit(sent_feat_mat)
 
     # enhance the original scores of the original sentence-feature matrix
@@ -83,8 +84,7 @@ def summarize(text):
                     (i, np.sum(np.dot(sent_feat_mat[i], model.components_) 
                         + model.intercept_visible_))
                     )
-                    
-    sent_scores.sort(key = lambda tup : tup[1], reverse=True)
+    sent_scores = sorted(sent_scores, key=itemgetter(1), reverse=True)
 
     # extract sentence with the top score
     top_sent = sentences[sent_scores[0][0]]
