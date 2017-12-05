@@ -12,7 +12,8 @@ def index(request):
     
 def simplify_text(request):
     text = request.POST.get('text', None)
-    text = core.summarize(text)
+    length = int(request.POST.get('length', None))
+    text = core.summarize(text, length)
     data = {
         'simplified_text': text
     }

@@ -13,7 +13,7 @@ import operator
 from operator import itemgetter
 from features import *
 
-def summarize(text):
+def summarize(text, length):
     stemmer = PorterStemmer()
     stop_words = set(stopwords.words('english'))
 
@@ -90,12 +90,9 @@ def summarize(text):
     top_sent = sentences[sent_scores[0][0]]
     summary = [sent_scores[0][0]]
     del sent_scores[0]
-
-    # parameter for number of sentences in summary
-    k = 3
-
+    
     # generate summary
-    for i in range(min(k, len(sent_scores))):
+    for i in range(int((length/100)*len(sent_scores))):
         top_half_scores = sent_scores[:int(len(sent_scores)/2)]
         highest_jaccard = -1
         next_sent = None
