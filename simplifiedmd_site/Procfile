@@ -1,0 +1,1 @@
+web: gunicorn simplifiedmd_site.wsgi --log-file -
