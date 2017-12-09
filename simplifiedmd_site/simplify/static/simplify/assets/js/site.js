@@ -4,13 +4,13 @@ function csrfSafeMethod(method) {
 
 function updateResults(data) {
     var result = $('#result-area');
-    result.text(data.simplified_text);
+    result.text(data.simplified_text).fadeIn('slow');
 }
 
 function updateResultsWithError() {
     var result = $('#result-area');
     var error = "Couldn't simplify the provided text";
-    result.text(error);
+    result.text(error).fadeIn('slow');
 }
 
 $(document).ready(function() {
@@ -33,7 +33,7 @@ $(document).ready(function() {
         var text = $('#text-area').val()
         var len = $('#slider').val()
         
-        if (text.length != 0) {
+        if (text.length > 0) {
             $.ajax({
                 type: 'POST',
                 url: 'ajax/simplify/',
@@ -41,6 +41,9 @@ $(document).ready(function() {
                     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                         xhr.setRequestHeader('X-CSRFToken', csrftoken);
                     }
+                    $('#result-area').hide().promise().done(function() {
+                        $('#loader').show();
+                    });
                 },
                 data: {
                     'text': text,
@@ -48,13 +51,12 @@ $(document).ready(function() {
                 },
                 dataType: 'json',
                 error: function() {
-                    updateResultsWithError()
+                    $('#loader').hide().promise().done(updateResultsWithError());
                 },
                 success: function(data) {
-                    updateResults(data)
+                    $('#loader').hide().promise().done(updateResults(data));
                 }
-            }); 
+            });
         }
-    });
-    
+    }); 
 });
