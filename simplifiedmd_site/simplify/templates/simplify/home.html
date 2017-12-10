@@ -9,8 +9,9 @@
 		<title>SimplifiedMD: A Website for Simplifying Medical Information</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		{% load static %}
+		{% load staticfiles %}
 		<link rel="stylesheet" href="{% static 'simplify/assets/css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/auto-complete.css' %}" />
 		<link rel="stylesheet" href="{% static 'simplify/assets/css/bootstrap-slider.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'simplify/assets/css/main.css' %}" />
 	</head>
@@ -21,8 +22,9 @@
 				<div class="inner">
 					<nav>
 						<ul>
-							<li><a href="#intro">Welcome</a></li>
-							<li><a href="#one">Results</a></li>
+							<li><a href="#intro">Simplify</a></li>
+							<li><a href="#one">Search</a></li>
+							<li><a href="#results">Results</a></li>
 							<li><a href="#two">About Us</a></li>
 						</ul>
 					</nav>
@@ -31,9 +33,8 @@
 
 		<!-- Wrapper -->
 			<div id="wrapper">
-
 				<!-- Intro -->
-					<section id="intro" class="wrapper style1 fullscreen fade-up">
+					<section id="intro" class="wrapper style1 fullscreen">
 						<div class="inner">
 							<h1>SimplifiedMD</h1>
 							<p>
@@ -48,18 +49,30 @@
                                           placeholder="Paste the text you would like to summarize here!"></textarea>
                             </p>
 							<ul class="actions">
-								<li><a id="simplify-btn" href="#one" class="button scrolly">Simplify!</a></li>
+								<li><a id="simplify-btn" href="#results" class="button scrolly">Simplify!</a></li>
 							</ul>
 						</div>
 					</section>
+					
+					<section id="one" class="wrapper style3 fullscreen">
+						<div class="inner">
+								<h1>SimplifiedMD</h1>
+								<p>				
+								    <label>Search pre-simplified articles!</label>						
+									<input id="hero-demo" 
+									       placeholder="Enter WebMD article title..." 
+									       name="q" 
+									       type="text">	
+								</p>
+						</div>								
+				    </section>
 
 				<!-- One -->
-					<section id="one" class="wrapper style2 spotlights">
+					<section id="results" class="wrapper style2 spotlights">
 						<section>
 							<div class="content">
 								<div class="inner">
 									<h2>Results</h2>
-									<div id="loader" style="display:none;"></div>
 									<p id="result-area">The results of the simplified medical information will be displayed here!</p>
 									<ul class="actions">
 										<li><a href="#" class="button">Simplify Again?</a></li>
@@ -69,7 +82,7 @@
 						</section>
 					</section>
 				<!-- Two -->
-					<section id="two" class="wrapper style3 fade-up">
+					<section id="two" class="wrapper style3">
 						<div class="inner">
 							<h2>About SimplifiedMD</h2>
 							<p>SimplifiedMD is a website useful for people that have a hard time understanding highly dense medical information! By inserting your desired text to simplify, our website is able to simplify your input text and output a simplified version of your medical text input. Simply copy any piece of text from a medical website such as WebMD, MedlinePlus, Mayo Clinic, and others, and just paste the piece of text into the text box on the main page and click on the "Simplify it!" button. A simplified version of text will then be output after the button has been pressed.</p>
@@ -86,11 +99,67 @@
 			<script src="{% static 'simplify/assets/js/skel.min.js' %}"></script>
 			<script src="{% static 'simplify/assets/js/util.js' %}"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<!-- <script src="{% static 'simplify/assets/js/bootstrap-typeahead.min.js' %}"></script> -->
+			
 			<script src="{% static 'simplify/assets/js/main.js' %}"></script>
 			<script src="{% static 'simplify/assets/js/bootstrap.min.js' %}"></script>
 			<script src="{% static 'simplify/assets/js/bootstrap-slider.min.js' %}"></script>
-            <script src="{% static 'simplify/assets/js/site.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/site.js' %}"></script>
 			<script src="{% static 'simplify/assets/js/js.cookie.js' %}"></script>
-			
-	</body>
+			<!-- <script src="{% static 'simplify/assets/js/typeahead.bundle.js' %}"></script> -->
+			<script src="{% static 'simplify/assets/js/auto-complete.min.js' %}"></script>
+			<script>
+			var demo1 = new autoComplete({
+					selector: '#hero-demo',
+					minChars: 1,
+					onSelect: function(e, term, item){
+						$.ajax({
+								type: 'POST',
+								url: 'lookup/',
+								beforeSend: function(xhr, settings) {
+									var csrftoken = Cookies.get('csrftoken');
+									
+										if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+												xhr.setRequestHeader('X-CSRFToken', csrftoken);
+										}
+								},
+								data: {
+										'title': term,
+								},
+								dataType: 'json',
+								error: function() {
+										updateResultsWithError();
+								},
+								success: function(data) {
+									updateResults(data)
+									$('html, body').animate({ scrollTop: $('#results').offset().top }, 'slow');
+								}
+						});
+					},
+					source: function(term, suggest){
+								$.ajax({
+								type: 'POST',
+								url: 'typeahead/',
+								beforeSend: function(xhr, settings) {
+									var csrftoken = Cookies.get('csrftoken');
+									
+										if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+												xhr.setRequestHeader('X-CSRFToken', csrftoken);
+										}
+								},
+								data: {
+										'title': term,
+								},
+								dataType: 'json',
+								error: function() {
+										updateResultsWithError();
+								},
+								success: function(data) {
+										return suggest(data.results);
+								}
+						});
+					}
+				});
+			</script>
+		</body>
 </html>

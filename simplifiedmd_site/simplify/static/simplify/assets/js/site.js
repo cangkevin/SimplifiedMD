@@ -13,6 +13,12 @@ function updateResultsWithError() {
     result.text(error).fadeIn('slow');
 }
 
+function updateResultsWithEmpty() {
+    var result = $('#result-area');
+    var msg = "No content to summarize";
+    result.text(msg).fadeIn('slow');
+}
+
 $(document).ready(function() {
     var csrftoken = Cookies.get('csrftoken');
     
@@ -57,6 +63,9 @@ $(document).ready(function() {
                     $('#loader').hide().promise().done(updateResults(data));
                 }
             });
+        }
+        else {
+            updateResultsWithEmpty();
         }
     }); 
 });
