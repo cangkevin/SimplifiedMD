@@ -34,7 +34,7 @@ $ python manage.py runserver
 ```
 runserver will automatically default to the settings in `settings/development.py`. Different settings can be chosen as the target using the `--settings` flag.
 
-**NOTE:** Application secrets are stored in an `.env` file in `simplified_site/`. In order to run the application, at minimum a `SECRET_KEY` and `DEVO_ALLOWED_HOSTS` must be provided to run locally:
+**NOTE:** Application secrets are stored in an `.env` file in `simplifiedmd/`. In order to run the application, at minimum a `SECRET_KEY` and `DEVO_ALLOWED_HOSTS` must be provided to run locally:
 ```bash
 SECRET_KEY=YOUR_DJANGO_SECRET_KEY
 DEVO_ALLOWED_HOSTS=.localhost, 127.0.0.1
