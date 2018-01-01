@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SimplifiedMD: A Website for Simplifying Medical Information</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/auto-complete.css' %}" />
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/bootstrap-slider.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'simplify/assets/css/main.css' %}" />
+	</head>
+	<body>
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Simplify</a></li>
+							<li><a href="#one">Search</a></li>
+							<li><a href="#results">Results</a></li>
+							<li><a href="#two">About Us</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen">
+						<div class="inner">
+							<h1>SimplifiedMD</h1>
+							<p>
+                                <label>Simplify any text!</label>
+                                <input id="slider" 
+                                       type="text"
+                                       data-slider-id="len-slider" />
+                                <span id="currentSliderValLabel" style="font-size: 1vw">Max summary length: <span id="sliderVal">50</span>%</span>
+                                <textarea id="text-area"
+                                          rows="5"
+                                          cols="80"
+                                          placeholder="Paste the text you would like to summarize here!"></textarea>
+                            </p>
+							<ul class="actions">
+								<li><a id="simplify-btn" href="#results" class="button scrolly">Simplify!</a></li>
+							</ul>
+						</div>
+					</section>
+					
+					<section id="one" class="wrapper style3 fullscreen">
+						<div class="inner">
+								<h1>SimplifiedMD</h1>
+								<p>				
+								    <label>Search pre-simplified articles!</label>						
+									<input id="hero-demo" 
+									       placeholder="Enter WebMD article title..." 
+									       name="q" 
+									       type="text">	
+								</p>
+						</div>								
+				    </section>
+
+				<!-- One -->
+					<section id="results" class="wrapper style2 spotlights">
+						<section>
+							<div class="content">
+								<div class="inner">
+									<h2>Results</h2>
+									<div id="loader" style="display: none"></div>
+									<p id="result-area">The results of the simplified medical information will be displayed here!</p>
+									<ul class="actions">
+										<li><a href="#" class="button">Simplify Again?</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+				<!-- Two -->
+					<section id="two" class="wrapper style3">
+						<div class="inner">
+							<h2>About SimplifiedMD</h2>
+							<p>SimplifiedMD is a website useful for people that have a hard time understanding highly dense medical information! By inserting your desired text to simplify, our website is able to simplify your input text and output a simplified version of your medical text input. Simply copy any piece of text from a medical website such as WebMD, MedlinePlus, Mayo Clinic, and others, and just paste the piece of text into the text box on the main page and click on the "Simplify it!" button. A simplified version of text will then be output after the button has been pressed.</p>
+							<p>We believe that understanding medical information such as diseases and drugs is crucial for patients as they can have a sense of relief when it comes to minor diseases or a sense of awareness when it comes to complicated and high impact diseases/drugs. Therefore, having a good grasp of what is going on with your body is important and thus SimplifiedMD is perfect for novice users that would like to learn more about certain diseases and/or drugs! </p>
+						</div>
+					</section>
+			</div>
+
+
+		<!-- Scripts -->
+			<script src="{% static 'simplify/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/util.js' %}"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+
+			<script src="{% static 'simplify/assets/js/main.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/bootstrap.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/bootstrap-slider.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/js.cookie.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/auto-complete.min.js' %}"></script>
+			<script src="{% static 'simplify/assets/js/site.js' %}"></script>
+		</body>
+</html>
